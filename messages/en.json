@@ -1,0 +1,11 @@
+{
+  "Index": {
+    "title": "Movie catalog coming soon",
+    "someTitles": "Some Titles"
+  },
+  "Menu": {
+    "home": "Home",
+    "mylist": "My List",
+    "search": "Search"
+  }
+}

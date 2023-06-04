@@ -1,0 +1,11 @@
+{
+  "Index": {
+    "title": "Proximamente catalogo de peliculas",
+    "someTitles": "Algunos Titulos"
+  },
+  "Menu": {
+    "home": "Inicio",
+    "mylist": "Mi Lista",
+    "search": "Buscar"
+  }
+}
