@@ -1,5 +1,18 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Used Technologies
+
+In this project we're using:
+
+- React Testing Library for the tests
+- Next.js as a framework for the whole application
+- Antd as the UI library
+- Axios for the requests
+- eslint to make sure the js pattern is the same on the whole project
+- Next-intl for the internalization, for the moment the website can be used with /es like this: [http://localhost:3000/es](http://localhost:3000/es) or /en which is the default
+- Styled-components for the components custom styles
+- Typescript for the website props and variables even for the services
+
 ## Getting Started
 
 First, run the development server:
