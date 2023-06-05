@@ -33,7 +33,11 @@ const MovieCard = ({
                 alt={`movie ${item.title}`}
                 width={150}
                 height={225}
-                style={{ borderRadius: "8px" }}
+                style={{
+                  borderRadius: "8px",
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
               />
               <h2>{item.title}</h2>
               <p>{item.release_date}</p>

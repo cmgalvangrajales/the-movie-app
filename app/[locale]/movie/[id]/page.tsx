@@ -1,13 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Layout, Breadcrumb } from "antd";
+import { Fragment, useEffect, useState } from "react";
+import { Layout, Breadcrumb, Typography, Divider } from "antd";
 import { useTranslations } from "next-intl";
 import { HomeStyles } from "../../page.styles";
-import { getMovie } from "@/services/MoviesService";
-import Menu from "../../../components/Menu";
+import {
+  getMovie,
+  createGuestSession as createGuestSessionService,
+} from "@/services/MoviesService";
 import { MovieInterface } from "@/services/MoviesService.types";
+import Menu from "../../../components/Menu";
+import Banner from "./Banner";
+import ValidateMovieForm from "./Form";
 
 const { Header, Footer } = Layout;
+const { Title } = Typography;
 
 const Movie = ({ params: { id } }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,6 +32,21 @@ const Movie = ({ params: { id } }: any) => {
     getMovieByID();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const createGuestSession = async () => {
+    const data = await createGuestSessionService();
+    console.log("data from guest session", data);
+    // TODO: save the guest_session_id to use it on the Add Rating req
+  };
+
+  const onFinish = (values: any) => {
+    console.log("Success:", values);
+    createGuestSession();
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
 
   return (
     <Layout>
@@ -54,7 +75,17 @@ const Movie = ({ params: { id } }: any) => {
           ]}
         />
         {!loading && movie ? (
-          <p>Movie Title {movie?.title}</p>
+          <Fragment key={movie.id}>
+            <Banner movie={movie} />
+            <Divider />
+            <Title level={3} style={{ marginBottom: "10px" }}>
+              Dont forget to leave your score
+            </Title>
+            <ValidateMovieForm
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+            />
+          </Fragment>
         ) : (
           <div>Loading</div>
         )}

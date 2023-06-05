@@ -60,3 +60,9 @@ export interface MovieInterface extends MovieBasics {
 export interface MoviesInterface extends MovieBasics {
   genre_ids: number[];
 }
+
+export interface GuestSessionInterface {
+  expires_at?: string;
+  guest_session_id?: string;
+  success: boolean;
+}

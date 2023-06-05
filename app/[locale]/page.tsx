@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { Layout, Pagination, Row, Breadcrumb } from "antd";
-import { useEffect, useState } from "react";
+import { Layout, Pagination, Row, Breadcrumb, Empty } from "antd";
+import { Fragment, useEffect, useState } from "react";
 import { getPopularMovies } from "@/services/MoviesService";
 import { MoviesStateInterface } from "./page.types";
 import type { PaginationProps } from "antd";
@@ -75,18 +75,26 @@ export default function Index() {
             <p>{t("banner.description")}</p>
           </HomeStyles.BannerContainer>
         </Row>
-        <MovieCard loading={loading} movies={movies.list} />
-        {movies && (
-          <Row style={{ justifyContent: "center", marginTop: "10px" }}>
-            <Pagination
-              current={currentPage}
-              total={movies.total_results > 5000 ? 5000 : movies.total_results}
-              hideOnSinglePage
-              responsive
-              showSizeChanger={false}
-              onChange={onPaginationChange}
-            />
-          </Row>
+        {!loading && !movies ? (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        ) : (
+          <Fragment>
+            <MovieCard loading={loading} movies={movies.list} />
+            {movies && (
+              <Row style={{ justifyContent: "center", marginTop: "10px" }}>
+                <Pagination
+                  current={currentPage}
+                  total={
+                    movies.total_results > 5000 ? 5000 : movies.total_results
+                  }
+                  hideOnSinglePage
+                  responsive
+                  showSizeChanger={false}
+                  onChange={onPaginationChange}
+                />
+              </Row>
+            )}
+          </Fragment>
         )}
       </HomeStyles.Container>
       <Footer style={{ textAlign: "center" }}>{footer("title")}</Footer>
