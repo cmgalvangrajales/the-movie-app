@@ -8,8 +8,9 @@ import {
   createGuestSession as createGuestSessionService,
 } from "@/services/MoviesService";
 import { MovieInterface } from "@/services/MoviesService.types";
+import { useValoredMovies, contextAppValueInterface } from "@/contexts/Reducer";
 import Menu from "../../../components/Menu";
-import Banner from "./Banner";
+import Banner from "@/components/Banner";
 import ValidateMovieForm from "./Form";
 
 const { Header, Footer } = Layout;
@@ -18,6 +19,8 @@ const { Title } = Typography;
 const Movie = ({ params: { id } }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [movie, setMovie] = useState<MovieInterface>();
+
+  const appContext: contextAppValueInterface = useValoredMovies();
 
   const footer = useTranslations("footer");
 
@@ -40,8 +43,11 @@ const Movie = ({ params: { id } }: any) => {
   };
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
     createGuestSession();
+
+    if (appContext.addMovie && movie) {
+      appContext.addMovie(movie);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {

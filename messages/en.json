@@ -14,5 +14,11 @@
   },
   "footer": {
     "title": "©2023 Created by Carlos Maximiliano Galvan Grajales"
+  },
+  "mylist": {
+    "banner": {
+      "title": "Welcome to my list",
+      "description": "Here you can find all your ranked movies."
+    }
   }
 }

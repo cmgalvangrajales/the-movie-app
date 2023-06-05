@@ -1,14 +1,6 @@
 import styled from "styled-components";
-import { Col } from "antd";
-import { ContainerInterface } from "./page.types";
 
 import { AppThemeInterface } from "@/contexts/ThemeContext";
-
-const Container = styled.div<ContainerInterface>`
-  min-height: 100vh;
-  padding: ${({ isBodyContainer = false }) =>
-    isBodyContainer ? "10px 20px" : "0"};
-`;
 
 const GridContainer = styled.div<{ theme?: AppThemeInterface }>`
   width: 100%;
@@ -41,7 +33,6 @@ const GridContainer = styled.div<{ theme?: AppThemeInterface }>`
   }
 `;
 
-export const HomeStyles = {
-  Container,
+export const MovieCard = {
   GridContainer,
 };

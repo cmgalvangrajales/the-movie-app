@@ -1,22 +1,36 @@
 import { MovieInterface } from "@/services/MoviesService.types";
 import { Row, Col, Typography } from "antd";
 import Image from "next/image";
+import { BannerType } from "./Banner.types";
 
-import { MovieDetail } from "./Movie.styles";
+import { BannerStyles } from "./Banner.styles";
 
 const { Paragraph } = Typography;
 
-const Banner = ({ movie }: { movie: MovieInterface }) => {
-  // TODO: add images path to env
+const Banner = ({
+  movie,
+  type = BannerType.Movie,
+  children,
+}: {
+  movie?: MovieInterface;
+  children?: React.ReactNode;
+  type?: BannerType;
+}) => {
   // TODO: update the req idiom
-  // TODO: update font-size for mobile
-  // TODO: remove breadscrumb for mobile
+
+  if (type === BannerType.Basic || !movie) {
+    return (
+      <BannerStyles.BannerContainerBasic>
+        {children}
+      </BannerStyles.BannerContainerBasic>
+    );
+  }
 
   return (
-    <MovieDetail.BannerContainer
+    <BannerStyles.BannerContainer
       background={`https://image.tmdb.org/t/p/w1920_and_h800_multi_faces${movie.backdrop_path}`}
     >
-      <MovieDetail.ExtraLayer>
+      <BannerStyles.ExtraLayer>
         <Row>
           <Col xs={24} sm={24} lg={9} xl={8} xxl={6}>
             <Image
@@ -28,10 +42,10 @@ const Banner = ({ movie }: { movie: MovieInterface }) => {
             />
           </Col>
           <Col xs={24} sm={24} lg={15} xl={16} xxl={18}>
-            <MovieDetail.Title>{movie.title}</MovieDetail.Title>
-            <MovieDetail.Title level={4}>
+            <BannerStyles.Title>{movie.title}</BannerStyles.Title>
+            <BannerStyles.Title level={4}>
               {movie.release_date}
-            </MovieDetail.Title>
+            </BannerStyles.Title>
             <Paragraph style={{ color: "white" }}>{movie.overview}</Paragraph>
             <Paragraph style={{ color: "white" }}>
               {movie.genres.map((item, index) => (
@@ -43,8 +57,8 @@ const Banner = ({ movie }: { movie: MovieInterface }) => {
             </Paragraph>
           </Col>
         </Row>
-      </MovieDetail.ExtraLayer>
-    </MovieDetail.BannerContainer>
+      </BannerStyles.ExtraLayer>
+    </BannerStyles.BannerContainer>
   );
 };
 

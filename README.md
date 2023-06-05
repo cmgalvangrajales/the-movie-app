@@ -5,6 +5,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 In this project we're using:
 
 - React Testing Library for the tests
+- useRedux for data persistence
+- useContext to share in the app
 - Next.js as a framework for the whole application
 - Antd as the UI library
 - Axios for the requests

@@ -1,6 +1,8 @@
+"use client";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { AppThemeProvider } from "@/contexts/ThemeContext";
+import ReducerProvider from "@/contexts/Reducer";
 
 export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "es" }];
@@ -24,7 +26,9 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <AppThemeProvider>{children}</AppThemeProvider>
+          <AppThemeProvider>
+            <ReducerProvider>{children}</ReducerProvider>
+          </AppThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

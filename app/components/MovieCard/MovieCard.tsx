@@ -3,16 +3,19 @@ import { LoadingOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
 
-import { MoviesInterface } from "@/services/MoviesService.types";
-import Wrapper from "../components/WrapperContainer";
-import { HomeStyles } from "./page.styles";
+import {
+  MoviesInterface,
+  MovieInterface,
+} from "@/services/MoviesService.types";
+import Wrapper from "../WrapperContainer";
+import { MovieCard as MovieCardStyles } from "./MovieCard.styles";
 
 const MovieCard = ({
   loading,
   movies,
 }: {
   loading: boolean;
-  movies: MoviesInterface[];
+  movies: MoviesInterface[] | MovieInterface[];
 }) => {
   if (loading) {
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -20,7 +23,7 @@ const MovieCard = ({
   }
 
   return (
-    <HomeStyles.GridContainer>
+    <MovieCardStyles.GridContainer>
       {!loading &&
         movies &&
         movies.map((item) => (
@@ -42,7 +45,7 @@ const MovieCard = ({
             </Link>
           </Wrapper>
         ))}
-    </HomeStyles.GridContainer>
+    </MovieCardStyles.GridContainer>
   );
 };
 

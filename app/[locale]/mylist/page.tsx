@@ -1,11 +1,26 @@
 "use client";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Layout, Breadcrumb, Row } from "antd";
 import Menu from "@/components/Menu";
+import Banner, { BannerType } from "@/components/Banner";
+import MovieGrid from "@/components/MovieGrid";
 import { HomeStyles } from "../page.styles";
-import { Layout, Breadcrumb } from "antd";
+import type { PaginationProps } from "antd";
+import { useValoredMovies, contextAppValueInterface } from "@/contexts/Reducer";
 
 const { Header } = Layout;
 
 export default function Index() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const t = useTranslations("mylist");
+
+  const appContext: contextAppValueInterface = useValoredMovies();
+
+  const movies = {
+    list: appContext?.movies?.length ? appContext?.movies : [],
+  };
+
   return (
     <Layout>
       <Header
@@ -31,6 +46,20 @@ export default function Index() {
               title: "My List",
             },
           ]}
+        />
+        <Row>
+          <Banner type={BannerType.Basic}>
+            <h1>{t("banner.title")}</h1>
+            <p>{t("banner.description")}</p>
+          </Banner>
+        </Row>
+        <MovieGrid
+          {...{
+            movies,
+            onPaginationChange: () => {},
+            loading: false,
+            currentPage,
+          }}
         />
       </HomeStyles.Container>
     </Layout>

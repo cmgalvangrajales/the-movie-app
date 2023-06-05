@@ -1,14 +1,15 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { Layout, Pagination, Row, Breadcrumb, Empty } from "antd";
-import { Fragment, useEffect, useState } from "react";
+import { Layout, Row, Breadcrumb } from "antd";
+import { useEffect, useState } from "react";
 import { getPopularMovies } from "@/services/MoviesService";
 import { MoviesStateInterface } from "./page.types";
 import type { PaginationProps } from "antd";
-import MovieCard from "./MovieCard";
 
 import { HomeStyles } from "./page.styles";
 import Menu from "../components/Menu";
+import Banner, { BannerType } from "../components/Banner";
+import MovieGrid from "../components/MovieGrid";
 
 const { Header, Footer } = Layout;
 
@@ -30,12 +31,10 @@ export default function Index() {
       page,
     });
     setMovies({ list: results, total_pages, total_results });
-    console.log("total_pages", total_pages);
     setLoading(false);
   };
 
   const onPaginationChange: PaginationProps["onChange"] = (page) => {
-    console.log(page);
     getMovies(page);
     setCurrentPage(page);
   };
@@ -43,8 +42,6 @@ export default function Index() {
   useEffect(() => {
     getMovies(1);
   }, []);
-
-  // TODO: add message in case there are no movies
 
   return (
     <Layout>
@@ -70,31 +67,15 @@ export default function Index() {
           ]}
         />
         <Row>
-          <HomeStyles.BannerContainer>
+          <Banner type={BannerType.Basic}>
             <h1>{t("banner.title")}</h1>
             <p>{t("banner.description")}</p>
-          </HomeStyles.BannerContainer>
+          </Banner>
         </Row>
-        {!loading && !movies ? (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        ) : (
-          <Fragment>
-            <MovieCard loading={loading} movies={movies.list} />
-            {movies && (
-              <Row style={{ justifyContent: "center", marginTop: "10px" }}>
-                <Pagination
-                  current={currentPage}
-                  total={
-                    movies.total_results > 5000 ? 5000 : movies.total_results
-                  }
-                  hideOnSinglePage
-                  responsive
-                  showSizeChanger={false}
-                  onChange={onPaginationChange}
-                />
-              </Row>
-            )}
-          </Fragment>
+        {!loading && movies && (
+          <MovieGrid
+            {...{ movies, onPaginationChange, loading, currentPage }}
+          />
         )}
       </HomeStyles.Container>
       <Footer style={{ textAlign: "center" }}>{footer("title")}</Footer>
