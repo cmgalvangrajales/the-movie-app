@@ -1,34 +1,50 @@
 "use client";
 import { useTranslations } from "next-intl";
-
-// import Menu from "@/components/Menu";
-import Menu from '../components/Menu';
-import { HomeStyles } from "./page.styles";
-import { Alert, Layout, List, Typography, Divider, Spin } from "antd";
+import { Layout, Pagination, Row, Breadcrumb } from "antd";
 import { useEffect, useState } from "react";
 import { getPopularMovies } from "@/services/MoviesService";
-import { LoadingOutlined } from "@ant-design/icons";
-import { MoviesInterface } from "@/services/MoviesService.types";
+import { MoviesStateInterface } from "./page.types";
+import type { PaginationProps } from "antd";
+import MovieCard from "./MovieCard";
 
-const { Header } = Layout;
+import { HomeStyles } from "./page.styles";
+import Menu from "../components/Menu";
+
+const { Header, Footer } = Layout;
 
 export default function Index() {
-  const [movies, setMovies] = useState<MoviesInterface[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [movies, setMovies] = useState<MoviesStateInterface>({
+    list: [],
+    total_pages: 1,
+    total_results: 0,
+  });
+
   const t = useTranslations("Index");
+  const footer = useTranslations("footer");
+
+  const getMovies = async (page: number) => {
+    setLoading(true);
+    const { results, total_pages, total_results } = await getPopularMovies({
+      page,
+    });
+    setMovies({ list: results, total_pages, total_results });
+    console.log("total_pages", total_pages);
+    setLoading(false);
+  };
+
+  const onPaginationChange: PaginationProps["onChange"] = (page) => {
+    console.log(page);
+    getMovies(page);
+    setCurrentPage(page);
+  };
 
   useEffect(() => {
-    const initialLoad = async () => {
-      const { results } = await getPopularMovies();
-      console.log("results", results);
-      setMovies(results);
-      setLoading(false);
-    };
-
-    initialLoad();
+    getMovies(1);
   }, []);
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  // TODO: add message in case there are no movies
 
   return (
     <Layout>
@@ -46,23 +62,34 @@ export default function Index() {
         <Menu />
       </Header>
       <HomeStyles.Container isBodyContainer>
-        <Alert message={t("title")} type="info" showIcon />
-        <Divider orientation="left" />
-        {!loading ? (
-          <List
-            header={<div>{t("someTitles")}</div>}
-            bordered
-            dataSource={movies}
-            renderItem={(item) => (
-              <List.Item>
-                <Typography.Text mark>[TITLE]</Typography.Text> {item.title}
-              </List.Item>
-            )}
-          />
-        ) : (
-          <Spin indicator={antIcon} />
+        <Breadcrumb
+          items={[
+            {
+              title: "Home",
+            },
+          ]}
+        />
+        <Row>
+          <HomeStyles.BannerContainer>
+            <h1>{t("banner.title")}</h1>
+            <p>{t("banner.description")}</p>
+          </HomeStyles.BannerContainer>
+        </Row>
+        <MovieCard loading={loading} movies={movies.list} />
+        {movies && (
+          <Row style={{ justifyContent: "center", marginTop: "10px" }}>
+            <Pagination
+              current={currentPage}
+              total={movies.total_results > 5000 ? 5000 : movies.total_results}
+              hideOnSinglePage
+              responsive
+              showSizeChanger={false}
+              onChange={onPaginationChange}
+            />
+          </Row>
         )}
       </HomeStyles.Container>
+      <Footer style={{ textAlign: "center" }}>{footer("title")}</Footer>
     </Layout>
   );
 }

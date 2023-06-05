@@ -1,11 +1,18 @@
 {
   "Index": {
     "title": "Movie catalog coming soon",
-    "someTitles": "Some Titles"
+    "someTitles": "Some Titles",
+    "banner": {
+      "title": "Welcome",
+      "description": "Millions of movies, TV shows and people to discover. Explore now."
+    }
   },
   "Menu": {
     "home": "Home",
     "mylist": "My List",
     "search": "Search"
+  },
+  "footer": {
+    "title": "©2023 Created by Carlos Maximiliano Galvan Grajales"
   }
 }

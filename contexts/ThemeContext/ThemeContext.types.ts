@@ -49,6 +49,7 @@ export interface AppThemeInterface {
     black: string;
     white: string;
     green: string;
+    blue: string;
     red: string;
     gray300: string;
     gray: string;

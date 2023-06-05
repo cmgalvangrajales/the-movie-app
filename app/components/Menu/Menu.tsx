@@ -31,6 +31,7 @@ function MenuComponent() {
 
   return (
     <Menu
+      theme={"dark"}
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"

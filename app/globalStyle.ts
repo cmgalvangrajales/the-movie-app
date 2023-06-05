@@ -12,6 +12,10 @@ const globalStyle = createGlobalStyle<GlobalStyleInterface>`
     max-width: 100vw;
     overflow-x: hidden;
     background-color: ${({ theme }) => theme.palette.secondary};
+
+    a {
+      color: inherit; 
+    }
   }
 `;
 

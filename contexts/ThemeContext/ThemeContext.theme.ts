@@ -38,6 +38,7 @@ export const theme: AppThemeInterface = {
     black: 'black',
     white: 'white',
     green: '#53A548',
+    blue: '#062441',
     red: '#CF1322',
     gray300: '#D9D9D9',
     gray: '#262626',

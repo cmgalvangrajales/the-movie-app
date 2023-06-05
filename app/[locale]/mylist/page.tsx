@@ -1,7 +1,7 @@
 "use client";
 import Menu from "@/components/Menu";
 import { HomeStyles } from "../page.styles";
-import { Layout } from "antd";
+import { Layout, Breadcrumb } from "antd";
 
 const { Header } = Layout;
 
@@ -21,7 +21,18 @@ export default function Index() {
       >
         <Menu />
       </Header>
-      <HomeStyles.Container isBodyContainer>testing</HomeStyles.Container>
+      <HomeStyles.Container isBodyContainer>
+        <Breadcrumb
+          items={[
+            {
+              title: <a href="/">Home</a>,
+            },
+            {
+              title: "My List",
+            },
+          ]}
+        />
+      </HomeStyles.Container>
     </Layout>
   );
 }

@@ -1,11 +1,18 @@
 {
   "Index": {
     "title": "Proximamente catalogo de peliculas",
-    "someTitles": "Algunos Titulos"
+    "someTitles": "Algunos Titulos",
+    "banner": {
+      "title": "Bienvenidos",
+      "description": "Millones de películas, programas de televisión y personas por descubrir. Explora ahora."
+    }
   },
   "Menu": {
     "home": "Inicio",
     "mylist": "Mi Lista",
     "search": "Buscar"
+  },
+  "footer": {
+    "title": "©2023 Creado por Carlos Maximiliano Galvan Grajales"
   }
 }
